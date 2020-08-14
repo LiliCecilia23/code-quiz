@@ -11,17 +11,31 @@
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <title>Hello, world!</title>
+    <title>Code Quiz: High Scores</title>
   </head>
   <body>
     <!-- Navbar that has link back to start page -->
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="./index.html">Home</a>
     </nav>
-
+    <div class="container-md col-md-8 jumbotron text-center mt-5" id="highScoreDiv">
+        <h1 class="display-4 mt-n4">High Scores</h1>
+        <hr class="my-4">
+        <!-- JS file will fill this with score -->
+        <div id="currentScore"></div>
+        <form>
+            <div class="form-group col-md-3 mx-auto my-4">
+              <input type="text" class="form-control text-center" id="initials" placeholder="Your Initials">
+            </div>
+        </form>
+        <a class="btn btn-lg btn-secondary" id="saveScore" href="#" role="button">Save score!</a>
+        <!-- JS will populate past scores/initials from local storage -->
+        <div id="pastScores"></div>
+        <!-- Button to clear scores -->
+        <a class="btn btn-lg btn-danger mt-4 mb-n4" id="clearScores" href="#" role="button">Clear Old Scores</a>
+    </div>
     
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
