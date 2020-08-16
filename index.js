@@ -10,9 +10,10 @@ var quizAnswer2 = document.getElementById("answer2");
 var quizAnswer3 = document.getElementById("answer3");
 var quizAnswer4 = document.getElementById("answer4");
 var jumbotron = document.getElementById("quizstart");
-var saveScore = document.getElementById("saveScore");
+var saveScoreBtn = document.getElementById("saveScore");
+var saveDiv = document.getElementById("saveScoreDiv");
 var currentScore = document.getElementById("currentScore");
-var clearScores = document.getElementById("clearScores");
+var clearScoresBtn = document.getElementById("clearScores");
 var pastScores = document.getElementById("pastScores");
 var questionsArray = [
     {question: "Commonly used data types DO NOT include:",
@@ -33,14 +34,22 @@ var questionsArray = [
 ];
 var correctAnswers = ["3. alerts","2. parentheses", "4. all of the above", "1. quotes", "3. console.log"];
 var score = 0;
+var initials = "";
 var displayedQuestion = 0;
+var previousScoresHistory = {};
 
 
-//hides div that contains the questions on the home page
+
+
+//hides divs that contain the questions and score saving on the home page
 function quizHide (){
     quizDiv.style.display = "none";
 }
+function saveHide (){
+    saveDiv.style.display = "none";
+}
 quizHide();
+saveHide();
 
 // makes jumbotron element disappear when quiz is started
 document.getElementById("startButton").addEventListener("click", function (){
@@ -86,16 +95,19 @@ function quizQuestions (){
 var result = document.createElement("p");
 document.getElementById("quiz").appendChild(result);
 
+//what happens when user answers correctly
 function correct (){
     result.innerHTML = "Correct answer!";
     score += 10; 
     displayedQuestion++;
     quizQuestions();
 }    
-
+// what happens when user answers incorrectly
 function wrong (){
     result.innerHTML = "Wrong answer!";
     score -= 10;
+    displayedQuestion++;
+    quizQuestions();
     if (startTime < 0) {
         startTime = 0;
         clearInterval(interval);
@@ -103,13 +115,15 @@ function wrong (){
         startTime -= 10;
     }
 }
-
+// sets what to do when quiz ends
 function quizFinish (){
     quizHide ();
-    window.location.href="./highscore.html";
+    clearInterval(interval);
+    document.getElementById("timerElement").style.display = "none";
+    saveDiv.style.display = "block";
     var yourScore = document.createElement("p");
-    currentScore.appendChild(yourScore);
-    yourScore.innerHTML = score;
+    document.getElementById("currentScore").appendChild(yourScore);
+    yourScore.innerHTML = "Your score is: " + score;
 }
 
 //makes answer buttons functional
@@ -144,3 +158,8 @@ quizAnswer4.addEventListener("click", function (){
         wrong();
     }
 });
+saveScoreBtn.addEventListener("click", function(){
+    previousScoresHistory.push({score, initials});
+    localStorage.setItem("user-info", score);
+    window.location.replace("./highscore.html");
+})
