@@ -31,7 +31,6 @@ var questionsArray = [
      answers: ["1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log"]
     }
 ];
-var answersArray = []
 var correctAnswers = ["3. alerts","3. parentheses", "4. all of the above", "3. quotes", "4. console.log"];
 var score = 0;
 var displayedQuestion = 0;
@@ -46,19 +45,19 @@ quizHide();
 // makes jumbotron element disappear when quiz is started
 document.getElementById("startButton").addEventListener("click", function (){
     jumbotron.style.display = "none";
-    window.setInterval(timer, 1000);
+    timer ();
     quizQuestions();
 });
 
 // sets the start time
 var startTime = 90;
-
+var interval = setInterval(timer, 1000);
 // this is the timer function
 function timer() {
     startTime--;
-    document.getElementById("timerElement").innerHTML = startTime;
-    if (startTime === 0 || questionsArray.length === displayedQuestion) {
-        clearInterval(timer);
+    document.getElementById("timerElement").innerHTML = "Time: " + startTime;
+    if (startTime === 0 || displayedQuestion === 6) {
+        clearInterval(interval);
         quizFinish();
     }
 }
@@ -100,10 +99,8 @@ document.getElementById("quiz").appendChild(result);
 //checks answer choice
 function check (event){
     var choice = event.currentTarget.innerHTML;
-    var correct = null;
-
+    
     // if they choose correctly, give them points
-    if (correctAnswers[displayedQuestion] === choice)
     if (correctAnswers[displayedQuestion] === choice){
         result.innerHTML = "Correct answer!";
         score += 10; 
@@ -112,7 +109,7 @@ function check (event){
         score -= 10;
         if (startTime < 0) {
             startTime = 0;
-            clearInterval(timer);
+            clearInterval(interval);
         } else {
             startTime -= 10;
         }
@@ -128,9 +125,9 @@ function check (event){
 }
 
 function quizFinish (){
-//     quizHide ();
-//     window.location.href="./highscore.html";
-//     var yourScore = document.createElement("p");
-//     currentScore.appendChild(yourScore);
-//     yourScore.innerHTML = score;
+    quizHide ();
+    window.location.href="./highscore.html";
+    var yourScore = document.createElement("p");
+    currentScore.appendChild(yourScore);
+    yourScore.innerHTML = score;
 }
